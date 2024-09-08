@@ -3,7 +3,7 @@ name: Deploy to Hostinger via FTP
 on:
   push:
     branches:
-      - main  # Change to the branch you want to trigger deployment
+      - main
 
 jobs:
   ftp-deploy:
@@ -20,7 +20,5 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ${{ secrets.FTP_PATH }}
-          local-dir: ./  # Adjust this if your build output is in a specific directory like /build or /dist
-
-      - name: Clean up temporary files
-        run: rm -rf ./*  # Optional: Cleans up the working directory after deployment
+          local-dir: ./  # Update if necessary
+          port: 21  # Set the correct port number if not default
