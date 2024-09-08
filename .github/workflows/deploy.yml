@@ -1,0 +1,26 @@
+name: Deploy to Hostinger via FTP
+
+on:
+  push:
+    branches:
+      - main  # Change to the branch you want to trigger deployment
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Setup FTP Deploy Action
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_PATH }}
+          local-dir: ./  # Adjust this if your build output is in a specific directory like /build or /dist
+
+      - name: Clean up temporary files
+        run: rm -rf ./*  # Optional: Cleans up the working directory after deployment
